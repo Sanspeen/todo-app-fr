@@ -12,7 +12,6 @@ export const TodoAdd = ({ handleNewTodo }) => {
 		if (description.length <= 1) return;
 
 		let newTodo = {
-			id: new Date().getTime(),
 			description: description,
 			done: false,
 		};
