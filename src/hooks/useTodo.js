@@ -17,16 +17,26 @@ export const useTodo = () => {
   const pendingTodosCount = todos.filter((todo) => !todo.done).length;
 
   useEffect(() => {
-    localStorage.setItem("todos", JSON.stringify(todos));
-  }, [todos]);
+    const fetchTodo = async () => {
+      try {
+        const response = await axios.get(URL);
+        localStorage.setItem("todos", JSON.stringify(response.data));
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchTodo();
+  }, [todos]); // Empty dependency array to run effect only once when component mounts
 
   const handleNewTodo = (todo) => {
     const action = {
       type: "Add Todo",
       payload: todo,
     };
-    axios.post(URL, action.payload)
-    dispatch(action);
+
+    axios.post(URL, action.payload); // Add new todo into database
+    dispatch(action); // Add todo to local array and show this in execution time
   };
 
   const handleDeleteTodo = (id) => {
@@ -34,7 +44,7 @@ export const useTodo = () => {
       type: "Delete Todo",
       payload: id,
     };
-
+    axios.delete(URL + "/" + id);
     dispatch(action);
   };
 
@@ -58,20 +68,6 @@ export const useTodo = () => {
 
     dispatch(action);
   };
-
-  useEffect(() => {
-    const fetchPokemon = async () => {
-      try {
-        const response = await axios.get(URL);
-        console.log(response.data); // Do whatever you want with the fetched data
-        localStorage.setItem("todos", JSON.stringify(response.data));
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchPokemon();
-  }, []); // Empty dependency array to run effect only once when component mounts
 
   return {
     todos,
