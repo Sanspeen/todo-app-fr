@@ -8,9 +8,11 @@ export const TodoItem = ({
 	handleDeleteTodo,
 	handleCompleteTodo,
 }) => {
+
+
 	return (
 		<li>
-			<span onClick={() => handleCompleteTodo(todo.id)}>
+			<span onClick={() => handleCompleteTodo(todo.id, todo)}>
 				<label
 					className={`container-done ${todo.done ? 'active' : ''}`}
 				></label>

@@ -16,16 +16,16 @@ export const useTodo = () => {
   const todosCount = todos.length;
   const pendingTodosCount = todos.filter((todo) => !todo.done).length;
 
-  useEffect(() => {
-    const fetchTodo = async () => {
-      try {
-        const response = await axios.get(URL);
-        localStorage.setItem("todos", JSON.stringify(response.data));
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
+  const fetchTodo = async () => {
+    try {
+      const response = await axios.get(URL);
+      localStorage.setItem("todos", JSON.stringify(response.data));
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
+  useEffect(() => {
     fetchTodo();
   }, [todos]); // Empty dependency array to run effect only once when component mounts
 
@@ -48,11 +48,17 @@ export const useTodo = () => {
     dispatch(action);
   };
 
-  const handleCompleteTodo = (id) => {
+  const handleCompleteTodo = (id, todo) => {
     const action = {
       type: "Complete Todo",
       payload: id,
     };
+    
+    const todoToUpdate = todo
+    todoToUpdate.done = !todoToUpdate.done // Update to insert in database
+    
+    axios.put(URL + "/" + id, todo);
+    todoToUpdate.done = !todoToUpdate.done // Update to upload local status
 
     dispatch(action);
   };
