@@ -16,7 +16,7 @@ export const TodoUpdate = ({ todo, handleUpdateTodo }) => {
 		const id = todo.id;
 		const description = updateDescription;
 
-		handleUpdateTodo(id, description);
+		handleUpdateTodo(id, description, todo);
 
 		setDisabled(!disabled);
 

@@ -63,7 +63,7 @@ export const useTodo = () => {
     dispatch(action);
   };
 
-  const handleUpdateTodo = (id, description) => {
+  const handleUpdateTodo = (id, description, todo) => {
     const action = {
       type: "Update Todo",
       payload: {
@@ -71,7 +71,7 @@ export const useTodo = () => {
         description,
       },
     };
-
+    axios.put(URL+"/" + id, todo)
     dispatch(action);
   };
 
