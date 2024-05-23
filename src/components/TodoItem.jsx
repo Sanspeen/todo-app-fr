@@ -8,15 +8,18 @@ export const TodoItem = ({
 	handleDeleteTodo,
 	handleCompleteTodo,
 }) => {
+
+
 	return (
 		<li>
-			<span onClick={() => handleCompleteTodo(todo.id)}>
+			<span onClick={() => handleCompleteTodo(todo.id, todo)}>
 				<label
 					className={`container-done ${todo.done ? 'active' : ''}`}
 				></label>
 			</span>
-			<TodoUpdate todo={todo} handleUpdateTodo={handleUpdateTodo} />
+			<TodoUpdate id="todo-update-component" todo={todo} handleUpdateTodo={handleUpdateTodo} />
 			<button
+				id = "btn-delete"
 				className='btn-delete'
 				onClick={() => handleDeleteTodo(todo.id)}
 			>

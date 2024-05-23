@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { FaEdit } from 'react-icons/fa';
+import { FaEdit, FaRegCheckCircle } from 'react-icons/fa';
 import { useForm } from '../hooks/useForm';
 
 export const TodoUpdate = ({ todo, handleUpdateTodo }) => {
@@ -16,7 +16,7 @@ export const TodoUpdate = ({ todo, handleUpdateTodo }) => {
 		const id = todo.id;
 		const description = updateDescription;
 
-		handleUpdateTodo(id, description);
+		handleUpdateTodo(id, description, todo);
 
 		setDisabled(!disabled);
 
@@ -39,7 +39,7 @@ export const TodoUpdate = ({ todo, handleUpdateTodo }) => {
 			/>
 
 			<button className='btn-edit' type='submit'>
-				<FaEdit />
+				{disabled ? <FaEdit /> : <FaRegCheckCircle/>}
 			</button>
 		</form>
 	);

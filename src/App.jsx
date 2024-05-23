@@ -18,7 +18,7 @@ function App() {
 	return (
 		<>
 			<div className='card-to-do'>
-				<h1>Lista de tareas</h1>
+				<h1>OsztályokApp</h1>
 				<div className='counter-todos'>
 					<h3>
 						N° Tareas: <span>{todosCount}</span>
