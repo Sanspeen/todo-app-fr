@@ -42,7 +42,7 @@ export const useTodo = () => {
         icon: "success",
         title: "Tu tarea se guardo exitosamente!",
         showConfirmButton: false,
-        timer: 1500
+        timer: 2500
       });
       dispatch(action); // Add todo to local array and show this in execution time
     }).catch(() => {
@@ -55,12 +55,32 @@ export const useTodo = () => {
   };
 
   const handleDeleteTodo = (id) => {
-    const action = {
-      type: "Delete Todo",
-      payload: id,
-    };
-    axios.delete(URL + "/" + id);
-    dispatch(action);
+    Swal.fire({
+      title: "Estas seguro que deseas eliminar la tarea?",
+      text: "No podras revertir este cambio",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, eliminarla!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        
+        const action = {
+          type: "Delete Todo",
+          payload: id,
+        };
+        
+        dispatch(action);
+        axios.delete(URL + "/" + id);
+        
+        Swal.fire({
+          title: "Eliminada!",
+          text: "Tu tarea no volverá :)",
+          icon: "success"
+        });
+      }
+    });
   };
 
   const handleCompleteTodo = (id, todo) => {
