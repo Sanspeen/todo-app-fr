@@ -49,8 +49,7 @@ export const useTodo = () => {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Something went wrong!",
-        footer: '<a href="#">Why do I have this issue?</a>'
+        text: "No se pudo guardar la tarea, intenta mas tarde"
       });
     }); // Add new todo into database
   };

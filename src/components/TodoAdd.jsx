@@ -1,5 +1,6 @@
 import React from 'react';
 import { useForm } from '../hooks/useForm';
+import Swal from 'sweetalert2'
 
 export const TodoAdd = ({ handleNewTodo }) => {
 	const { description, onInputChange, onResetForm } = useForm({
@@ -8,7 +9,15 @@ export const TodoAdd = ({ handleNewTodo }) => {
 	
 	const onFormSubmit = e => {
 		e.preventDefault();
-		if (description.length <= 1) return;
+		console.log(description);
+		if (description.length <= 1){
+			Swal.fire({
+				icon: "error",
+				title: "Necesitas una tarea!",
+				text: "Ingresa minimo ingresar texto para saber que haras :)",
+			  });
+			return;
+		} 
 		let newTodo = {
 			id: new Date().getTime(),
 			description: description,
