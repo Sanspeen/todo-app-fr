@@ -1,6 +1,7 @@
 import { useEffect, useReducer } from "react";
 import { todoReducer } from "../todoreducer";
 import axios from "axios";
+import Swal from 'sweetalert2'
 
 export const useTodo = () => {
   const URL = "http://localhost:8080/api/v1/task";
@@ -29,14 +30,29 @@ export const useTodo = () => {
     fetchTodo();
   }, [todos]); // Empty dependency array to run effect only once when component mounts
 
-  const handleNewTodo = (todo) => {
+  const handleNewTodo = async(todo) => {
     const action = {
       type: "Add Todo",
       payload: todo,
     };
 
-    axios.post(URL, action.payload); // Add new todo into database
-    dispatch(action); // Add todo to local array and show this in execution time
+    await axios.post(URL, action.payload).then(() => {
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Tu tarea se guardo exitosamente!",
+        showConfirmButton: false,
+        timer: 1500
+      });
+      dispatch(action); // Add todo to local array and show this in execution time
+    }).catch(() => {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong!",
+        footer: '<a href="#">Why do I have this issue?</a>'
+      });
+    }); // Add new todo into database
   };
 
   const handleDeleteTodo = (id) => {
@@ -53,10 +69,10 @@ export const useTodo = () => {
       type: "Complete Todo",
       payload: id,
     };
-    
+
     const todoToUpdate = todo
     todoToUpdate.done = !todoToUpdate.done // Update to insert in database
-    
+
     axios.put(URL + "/" + id, todo);
     todoToUpdate.done = !todoToUpdate.done // Update to upload local status
 
@@ -71,7 +87,7 @@ export const useTodo = () => {
         description,
       },
     };
-    axios.put(URL+"/" + id, todo)
+    axios.put(URL + "/" + id, todo)
     dispatch(action);
   };
 

@@ -5,18 +5,15 @@ export const TodoAdd = ({ handleNewTodo }) => {
 	const { description, onInputChange, onResetForm } = useForm({
 		description: '',
 	});
-
+	
 	const onFormSubmit = e => {
 		e.preventDefault();
-
 		if (description.length <= 1) return;
-
 		let newTodo = {
 			id: new Date().getTime(),
 			description: description,
 			done: false,
 		};
-
 		handleNewTodo(newTodo);
 		onResetForm();
 	};
