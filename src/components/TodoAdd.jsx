@@ -10,7 +10,7 @@ export const TodoAdd = ({ handleNewTodo }) => {
 	const onFormSubmit = e => {
 		e.preventDefault();
 		console.log(description);
-		if (description.length <= 1){
+		if (description.length < 1){
 			Swal.fire({
 				icon: "error",
 				title: "Necesitas una tarea!",
